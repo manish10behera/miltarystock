@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "tailwindcss": "^4.1.13"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
