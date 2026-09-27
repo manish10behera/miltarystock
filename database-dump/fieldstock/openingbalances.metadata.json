@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"baseId":{"$numberInt":"1"},"assetId":{"$numberInt":"1"}},"name":"baseId_1_assetId_1","background":true,"unique":true}],"uuid":"2e5a5be5f1864d319d5b6901c0920378","collectionName":"openingbalances","type":"collection"}
