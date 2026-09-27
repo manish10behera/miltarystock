@@ -58,17 +58,26 @@ const navForRole = {
   'Logistics Officer': ['Dashboard', 'Inventory', 'Purchases', 'Transfers', 'Activity log'],
 };
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const API_URL = (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:4000/api' : '')).replace(/\/+$/, '');
 
 async function apiRequest(path, token, options = {}) {
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
+  if (!API_URL) throw new Error('Backend API is not configured. Set VITE_API_URL to the deployed API URL ending in /api.');
+  let response;
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers: {
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error(`Cannot reach the Fieldstock API at ${API_URL}. Check VITE_API_URL and the API CORS origin.`);
+    }
+    throw error;
+  }
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.error || `Request failed (${response.status})`);
   return payload;
