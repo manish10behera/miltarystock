@@ -358,5 +358,4 @@ app.use((error, request, response, next) => {
   response.status(error.status || 500).json({ error: error.status ? error.message : 'Internal server error' });
 });
 
-await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fieldstock');
-app.listen(port, () => console.info(`Fieldstock API listening on ${port}`));
+export default app;

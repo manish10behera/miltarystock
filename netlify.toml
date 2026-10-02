@@ -1,0 +1,15 @@
+[build]
+command = "npm run build -w client"
+publish = "client/dist"
+functions = "netlify/functions"
+
+[build.environment]
+NODE_VERSION = "22.14.0"
+
+[functions]
+node_bundler = "esbuild"
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/api/:splat"
+status = 200

@@ -111,6 +111,8 @@ The seeder reads `DEMO_PASSWORD`, `DEMO_ADMIN_EMAIL`, `DEMO_COMMANDER_EMAIL`, an
 mongorestore --uri mongodb://127.0.0.1:27017/fieldstock database-dump/fieldstock
 ```
 
-For Vercel, import the repository, build with `npm run build`, publish `client/dist`, and set `VITE_API_URL` to the public Render API URL ending in `/api`. For Render, use `render.yaml`; configure `MONGODB_URI` with MongoDB Atlas and `CLIENT_ORIGIN` with the Vercel origin. Render generates `JWT_SECRET`. Both platforms require account ownership and environment setup; this workspace contains no deployment credentials, so no public hosted URL has been created.
+For the requested split deployment, import this repository into Vercel for the frontend and Netlify for the API. The root `vercel.json` builds with `npm run build` and publishes `client/dist`. In Vercel, set `VITE_API_URL` to `https://<your-netlify-site>.netlify.app/api` before building. In Netlify, use the repository root, the settings in `netlify.toml`, and configure `MONGODB_URI` with a MongoDB Atlas connection string, `JWT_SECRET` with a long random secret, and `CLIENT_ORIGIN` with the exact Vercel origin (for example, `https://your-fieldstock.vercel.app`). The Netlify function serves the existing `/api/...` routes through `/.netlify/functions/api`; MongoDB is connected lazily when the function is invoked. Do not run the demo seeder against production data.
+
+The `render.yaml` file remains an optional deployment for a long-running API server. Both hosting providers and MongoDB Atlas require account ownership and environment setup; this workspace contains no deployment credentials, so no public hosted URL has been created.
 
 The PDF companion is `docs/PROJECT_GUIDE.pdf`. A timed recording outline for the requested walkthrough is `docs/VIDEO_WALKTHROUGH.md`; the actual video still needs to be recorded and uploaded by the project owner.
