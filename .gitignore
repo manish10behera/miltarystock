@@ -6,3 +6,5 @@ dist/
 *.log
 coverage/
 server/data/
+# Local Netlify folder
+.netlify
